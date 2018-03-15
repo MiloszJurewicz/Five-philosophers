@@ -12,17 +12,18 @@ using std::mutex;
 
 class Philosopher
 {
-public:
-    Philosopher(int id);
-    ~Philosopher();
-
-    void routine(mutex & _muLeftChopstick, mutex & _muRightChopstick, mutex & _muGui, int leftChopstickNumber, int rightChopstickNumber);
-
 private:
     int id;
-    string status = "purgatory";
+    bool isRunning;
+    string status;
     void eat(mutex & _muLeftChopstick, mutex & _muRightChopstick, mutex & _muGui, int leftChopstickNumber, int rightChopstickNumber);
     void meditate(mutex & _muGui);
+
+public:
+    explicit Philosopher(int id);
+    ~Philosopher();
+    void routine(mutex & _muLeftChopstick, mutex & _muRightChopstick, mutex & _muGui, int leftChopstickNumber, int rightChopstickNumber);
+    void setRunCondition(bool runCondition);
 };
 
 #endif //FIVE_PHILOSOPHERS_PHILISOPHER_H

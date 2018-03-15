@@ -4,6 +4,7 @@
 
 #include <ncurses.h>
 #include <mutex>
+#include <cmath>
 #include "DrawGui.h"
 
 using std::mutex;
@@ -11,7 +12,7 @@ using std::to_string;
 
 void initGui(){
 
-    srand(time(NULL));
+    srand(static_cast<unsigned int>(time(nullptr)));
     initscr();
     start_color();
 
@@ -35,10 +36,18 @@ void drawPhilosopher(int philosopherId, string philosopherStatus, float outOf, f
 
     attron(COLOR_PAIR(2));
     mvprintw(1 + philosopherId * 4, 0, ("Philosopher no. " + to_string(philosopherId)).c_str());
-    mvprintw(2 + philosopherId * 4, 0, clean.c_str());
-    mvprintw(2 + philosopherId * 4, 0, ("Status: " + philosopherStatus).c_str());
-    mvprintw(3 + philosopherId * 4, 0, clean.c_str());
-    mvprintw(3 + philosopherId * 4, 0, ("Progress: " + to_string(doneThisMany/outOf) + " percent").c_str());
+
+    if(philosopherStatus.compare("Picking chopsticks")){
+        mvprintw(2 + philosopherId * 4, 0, clean.c_str());
+        mvprintw(2 + philosopherId * 4, 0, ("Status: " + philosopherStatus).c_str());
+        mvprintw(3 + philosopherId * 4, 0, clean.c_str());
+        mvprintw(3 + philosopherId * 4, 0, ("Progress: " + to_string(floor((doneThisMany/outOf) * 100)) + " percent").c_str());
+    }else{
+        mvprintw(2 + philosopherId * 4, 0, clean.c_str());
+        mvprintw(2 + philosopherId * 4, 0, ("Status: " + philosopherStatus).c_str());
+        mvprintw(3 + philosopherId * 4, 0, clean.c_str());
+        //mvprintw(3 + philosopherId * 4, 0, ("Progress: " + to_string(floor((doneThisMany/outOf) * 100)) + " percent").c_str());
+    }
 
     refresh();
 }

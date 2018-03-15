@@ -7,6 +7,7 @@
 #include "Philosopher.h"
 #include "DrawGui.h"
 #include <ncurses.h>
+#include <future>
 
 using std::move;
 using std::vector;
@@ -17,6 +18,10 @@ using std::mem_fn;
 using std::mutex;
 using std::ref;
 
+mutex _muGUI;
+std::chrono::milliseconds runTimer(10000);
+static const int numPhilosophers = 5;
+
 class Chopstick
 {
 public:
@@ -24,14 +29,23 @@ public:
     mutex m;
 };
 
-mutex _muGUI;
+//Sets bool to false which causes all threads to close after they finish they running cycle
+void stopThreadsTimer(vector<Philosopher *> philosophers){
+
+    //coment out getch and uncomment timer for it to work for given amount of time
+    //for some reason u have to press getch twice for program to close (???)
+    //std::this_thread::sleep_for(runTimer);
+    getch();
+
+    for(int i = 0; i < philosophers.size(); i++){
+       philosophers.at(i)->setRunCondition(false);
+    }
+}
 
 int main() {
 
     initGui();
-
-    static const int numPhilosophers = 5;
-
+    
     // 5 utencils on the left and right of each philosopher. Use them to acquire locks.
     vector< unique_ptr<Chopstick> > chopsticks(numPhilosophers);
 
@@ -43,8 +57,12 @@ int main() {
     }
 
     vector<thread> tasks(numPhilosophers);
+    vector<Philosopher*> philosophers;
+
     for(int i = 0; i < numPhilosophers; i++){
         Philosopher *p = new Philosopher(i);
+        philosophers.push_back(p);
+
         if(i == 0){
             tasks[i] = (thread(&Philosopher::routine,
                               p,
@@ -54,7 +72,6 @@ int main() {
                               0,
                               numPhilosophers - 1)
             );
-            //philosopherThread.detach();
         }else{
             tasks[i] = (thread(&Philosopher::routine,
                               p,
@@ -64,15 +81,16 @@ int main() {
                               i - 1,
                               i)
             );
-            //philosopherThread.detach();
         }
 
     }
 
-    for_each(tasks.begin(), tasks.end(), mem_fn(&thread::join));
+    //for_each(tasks.begin(), tasks.end(), mem_fn(&thread::join));
 
-    //thread clock(clockFunc);
-    //clock.join();
+    for(int i = 0; i < tasks.size(); i++){
+        stopThreadsTimer(philosophers);
+        tasks.at(i).join();
+    }
 
     curs_set(FALSE);
     endwin();
