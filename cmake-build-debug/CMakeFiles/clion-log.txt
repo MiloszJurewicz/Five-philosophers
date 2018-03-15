@@ -1,0 +1,4 @@
+/home/jupiter/Downloads/clion-2017.3.4/bin/cmake/bin/cmake -DCMAKE_BUILD_TYPE=Debug -G "CodeBlocks - Unix Makefiles" "/home/jupiter/CLionProjects/Five philosophers"
+-- Configuring done
+-- Generating done
+-- Build files have been written to: /home/jupiter/CLionProjects/Five philosophers/cmake-build-debug

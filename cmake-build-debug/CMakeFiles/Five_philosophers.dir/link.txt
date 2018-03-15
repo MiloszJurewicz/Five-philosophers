@@ -1,0 +1,1 @@
+/usr/bin/c++  -std=c++17 -pthread  -g   CMakeFiles/Five_philosophers.dir/main.cpp.o CMakeFiles/Five_philosophers.dir/Philosopher.cpp.o CMakeFiles/Five_philosophers.dir/DrawGui.cpp.o  -o Five_philosophers -lcurses 

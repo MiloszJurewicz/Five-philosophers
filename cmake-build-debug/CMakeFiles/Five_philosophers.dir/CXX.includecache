@@ -1,0 +1,52 @@
+#IncludeRegexLine: ^[ 	]*[#%][ 	]*(include|import)[ 	]*[<"]([^">]+)([">])
+
+#IncludeRegexScan: ^.*$
+
+#IncludeRegexComplain: ^$
+
+#IncludeRegexTransform: 
+
+/home/jupiter/CLionProjects/Five philosophers/DrawGui.cpp
+ncurses.h
+-
+mutex
+-
+DrawGui.h
+/home/jupiter/CLionProjects/Five philosophers/DrawGui.h
+
+/home/jupiter/CLionProjects/Five philosophers/DrawGui.h
+
+/home/jupiter/CLionProjects/Five philosophers/Philosopher.cpp
+iostream
+-
+thread
+-
+Philosopher.h
+/home/jupiter/CLionProjects/Five philosophers/Philosopher.h
+DrawGui.h
+/home/jupiter/CLionProjects/Five philosophers/DrawGui.h
+
+/home/jupiter/CLionProjects/Five philosophers/Philosopher.h
+mutex
+-
+
+/home/jupiter/CLionProjects/Five philosophers/main.cpp
+iostream
+-
+memory
+-
+vector
+-
+thread
+-
+algorithm
+-
+mutex
+-
+Philosopher.h
+/home/jupiter/CLionProjects/Five philosophers/Philosopher.h
+DrawGui.h
+/home/jupiter/CLionProjects/Five philosophers/DrawGui.h
+ncurses.h
+-
+
